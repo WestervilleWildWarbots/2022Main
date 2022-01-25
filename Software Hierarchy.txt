@@ -1,0 +1,30 @@
+Robot -
+
+Auto Init - 
+	-Reset timer
+	-Instantiate auto commands
+
+Auto Periodic-
+	- call auto commands
+	-control structure for auto commands
+
+Teleop Init -
+	- Instantiate teleop commands
+	-Reset timer
+Teleop Periodic 
+	- UI / Joystick
+	-call teleop commands
+	-control structure for teleop commands 
+
+Robot Periodic 
+-Smartdashboard
+
+Commands-
+Call Subsystem methods
+Outline Tasks
+Logic - how/when should subsystem methods be called
+
+Subsystems-
+Interface with components - get/set
+All component definitions - private
+Calculations
