@@ -23,8 +23,10 @@ Commands-
 Call Subsystem methods
 Outline Tasks
 Logic - how/when should subsystem methods be called
+Drive | Auto | Shoot | Gate | Rotate | Intake | Unlatch | Aim
 
 Subsystems-
 Interface with components - get/set
 All component definitions - private
 Calculations
+Drive | Shoot | Intake | Vision
