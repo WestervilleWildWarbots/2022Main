@@ -1,11 +1,14 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Subsystems.VisionSubsystem;
 
 public class AimCommand extends CommandBase{
-    
-    public AimCommand(){
 
+    private VisionSubsystem visionSubsystem;
+
+    public AimCommand(VisionSubsystem visionSubsystem){
+        this.visionSubsystem = visionSubsystem;
     }
 
     @Override
