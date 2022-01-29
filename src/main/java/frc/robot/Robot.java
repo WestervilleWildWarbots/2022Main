@@ -10,6 +10,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Subsystems.*;
+import frc.robot.Commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,7 +25,22 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  private DriveSubsystem driveSubsystem;
+  private IntakeSubsystem intakeSubsystem;
+  private ShootSubsystem shootSubsystem;
+  private VisionSubsystem visionSubsystem;
+
+  private AimCommand aimCommand;
+  private AutoCommand autoCommand;
+  private DriveCommand driveCommand;
+  private GateCommand gateCommand;
+  private IntakeCommand intakeCommand;
+  private RotateCommand rotateCommand;
+  private ShootCommand shootCommand;
+  private UnlatchCommand unlatchCommand;
+
   private TalonSRX testTalon;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,6 +52,29 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     testTalon = new TalonSRX(22);
+
+    driveSubsystem = new DriveSubsystem();
+    intakeSubsystem = new IntakeSubsystem();
+    shootSubsystem = new ShootSubsystem();
+    visionSubsystem = new VisionSubsystem();
+
+    aimCommand = new AimCommand(visionSubsystem);
+    autoCommand = new AutoCommand();
+    driveCommand = new DriveCommand(driveSubsystem);
+    gateCommand = new GateCommand(shootSubsystem);
+    intakeCommand = new IntakeCommand(intakeSubsystem);
+    rotateCommand = new RotateCommand(shootSubsystem);
+    shootCommand = new ShootCommand(shootSubsystem);
+    unlatchCommand = new UnlatchCommand(intakeSubsystem);
+
+    aimCommand.initialize();
+    autoCommand.initialize();
+    driveCommand.initialize();
+    gateCommand.initialize();
+    intakeCommand.initialize();
+    rotateCommand.initialize();
+    shootCommand.initialize();
+    unlatchCommand.initialize();
   }
 
   /**
