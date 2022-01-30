@@ -4,9 +4,7 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,7 +37,7 @@ public class Robot extends TimedRobot {
   private ShootCommand shootCommand;
   private UnlatchCommand unlatchCommand;
 
-  private TalonSRX testTalon;
+  private Joystick controlStick;
 
 
   /**
@@ -51,7 +49,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    testTalon = new TalonSRX(22);
+
+    controlStick = new Joystick(0);
 
     driveSubsystem = new DriveSubsystem();
     intakeSubsystem = new IntakeSubsystem();
@@ -59,8 +58,7 @@ public class Robot extends TimedRobot {
     visionSubsystem = new VisionSubsystem();
 
     aimCommand = new AimCommand(visionSubsystem);
-    autoCommand = new AutoCommand();
-    driveCommand = new DriveCommand(driveSubsystem);
+    driveCommand = new DriveCommand(driveSubsystem, controlStick);
     gateCommand = new GateCommand(shootSubsystem);
     intakeCommand = new IntakeCommand(intakeSubsystem);
     rotateCommand = new RotateCommand(shootSubsystem);
@@ -68,7 +66,6 @@ public class Robot extends TimedRobot {
     unlatchCommand = new UnlatchCommand(intakeSubsystem);
 
     aimCommand.initialize();
-    autoCommand.initialize();
     driveCommand.initialize();
     gateCommand.initialize();
     intakeCommand.initialize();
@@ -102,12 +99,15 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    
+    autoCommand = new AutoCommand(m_autoSelected);
+    autoCommand.initialize();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
+    /*switch (m_autoSelected) {
       case kCustomAuto:
         // Put custom auto code here
         break;
@@ -115,7 +115,9 @@ public class Robot extends TimedRobot {
       default:
         // Put default auto code here
         break;
-    }
+    }*/
+
+    autoCommand.execute();
   }
 
   /** This function is called once when teleop is enabled. */
@@ -127,7 +129,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    testTalon.set(ControlMode.PercentOutput,0.25);
   }
 
   /** This function is called once when the robot is disabled. */

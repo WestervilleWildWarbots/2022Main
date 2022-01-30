@@ -4,8 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoCommand extends CommandBase{
     
-    public AutoCommand(){
+    private String route;
 
+    public AutoCommand(String route){
+      this.route = route;
     }
 
     @Override

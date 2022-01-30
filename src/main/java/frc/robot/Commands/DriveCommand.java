@@ -1,14 +1,17 @@
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Subsystems.DriveSubsystem;
 
 public class DriveCommand extends CommandBase{
 
     private DriveSubsystem driveSubsystem;
+    private Joystick driveStick;
 
-    public DriveCommand(DriveSubsystem driveSubsystem){
+    public DriveCommand(DriveSubsystem driveSubsystem, Joystick driveStick){
         this.driveSubsystem = driveSubsystem;
+        this.driveStick = driveStick;
     }
 
     @Override

@@ -18,7 +18,8 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void execute(){
-
+        //MUST SMOOTHLY RAMP between current speed and desired speed
+        //TODO: sense color and spit out ball if not our team color
     }
     
     @Override
