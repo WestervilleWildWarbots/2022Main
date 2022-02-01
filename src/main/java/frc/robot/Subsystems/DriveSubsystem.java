@@ -1,8 +1,13 @@
 package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class DriveSubsystem extends SubsystemBase{
+    private CANSparkMax frontLeft;
+    private CANSparkMax frontRight;
+    private CANSparkMax backLeft;
+    private CANSparkMax backRight;
     /*
     Mecanum / Neo|CIM / SparkMax  FL 11 
     Mecanum / Neo|CIM / SparkMax  FR 12 
@@ -12,7 +17,22 @@ public class DriveSubsystem extends SubsystemBase{
     Accelerometer 51
     */
     public DriveSubsystem(){
-
+        frontLeft = new CANSparkMax(11, MotorType.kBrushless);
+        frontRight = new CANSparkMax(12, MotorType.kBrushless);
+        backLeft = new CANSparkMax(21, MotorType.kBrushless);
+        backRight = new CANSparkMax(22, MotorType.kBrushless);
+    }
+    public void tankDrive(double leftSpeed, double rightSpeed) {
+        frontLeft.set(leftSpeed);
+        frontRight.set(rightSpeed);
+        backLeft.set(leftSpeed);
+        backRight.set(rightSpeed);
+      }
+    public void regularDrive(double flSpeed, double frSpeed, double blSpeed, double brSpeed){
+        frontLeft.set(flSpeed);
+        frontRight.set(frSpeed);
+        backLeft.set(blSpeed);
+        backRight.set(brSpeed);
     }
     
     /*
