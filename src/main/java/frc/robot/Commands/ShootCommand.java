@@ -40,9 +40,8 @@ public class ShootCommand extends CommandBase{
                 case 3:shootSubsystem.BeginRamp(0.75);
                 break;
             }
-            FireAtWill = false;
         }
-       
+        FireAtWill = false;
 
 
         //TODO: sense color and spit out ball if not our team color

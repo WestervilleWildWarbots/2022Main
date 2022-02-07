@@ -14,7 +14,7 @@ public class ShootSubsystem extends SubsystemBase{
     private double HalfSpeed;
     private double QuarterSpeed;
     private double ThreeQuarterSpeed;
-    private ShootCommand shootCommand;
+
     /*
     Flywheel Motor / Redline? / SparkMax 30 
     Turret Rotation Motor / Redline? / SparkMax 34 
@@ -24,42 +24,41 @@ public class ShootSubsystem extends SubsystemBase{
     Beam Break Sensor 53
      */
     
-    public ShootSubsystem(ShootCommand shootCommand){
-        FlywheelMotor = new CANSparkMotor(14 MotorType.kBrushless);
-        this.shootCommand = shootCommand;
+    public ShootSubsystem(){
+        FlywheelMotor = new CANSparkMax(30, MotorType.kBrushless);
     }
 
     public void BeginRamp(double DesiredSpeed) { //Begin ramping the motor to the Desired speed as specified in ShootCommand
-       QuarterSpeed = DesiredSpeed*0.25;
-       HalfSpeed = DesiredSpeed*0.5;
-       ThreeQuarterSpeed = DesiredSpeed*0.75;
-        if(shootCommand.FireAtWill == true){
-            double Time = 0;
-            if(Time == 0){
-                while(Time<=0.25){
-                    FlywheelMotor.set(QuarterSpeed);
-                    Time+=0.01
-                }
+        QuarterSpeed = DesiredSpeed*0.25;
+        HalfSpeed = DesiredSpeed*0.5;
+        ThreeQuarterSpeed = DesiredSpeed*0.75;
+        
+        double Time = 0;
+        
+        if(Time == 0){
+            while(Time<=0.25){
+                FlywheelMotor.set(QuarterSpeed);
+                Time+=0.01;
             }
-            if(Time == 0.26){
-                while(Time<=0.50){
-                    FlywheelMotor.set(HalfSpeed);
-                    Time+=0.01
-                }
+        }
+        if(Time == 0.26){
+            while(Time<=0.50){
+                FlywheelMotor.set(HalfSpeed);
+                Time+=0.01;
             }
-            if(Time == 0.51){
-                while(Time<=0.75){
-                    FlywheelMotor.set(ThreeQuarterSpeed);
-                    Time+=0.01
-                }
+        }
+        if(Time == 0.51){
+            while(Time<=0.75){
+                FlywheelMotor.set(ThreeQuarterSpeed);
+                Time+=0.01;
             }
-            if(Time == 0.76){
-                while(Time<=1){
-                    FlywheelMotor.set(DesiredSpeed);
-                    Time+=0.01
-                }
+        }
+        if(Time == 0.76){
+            while(Time<=1){
+                FlywheelMotor.set(DesiredSpeed);
+                Time+=0.01;
             }
-       }
+        }
     }
     /*
     Methods:
