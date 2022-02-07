@@ -4,28 +4,34 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Commands.ShootCommand;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import java.lang.AutoCloseable;
 import java.sql.Time;
 
 public class ShootSubsystem extends SubsystemBase{
-    public CANSparkMax FlywheelMotor;
+    private CANSparkMax FlywheelMotor;
     private double HalfSpeed;
     private double QuarterSpeed;
     private double ThreeQuarterSpeed;
 
+    private ColorSensorV3 cSensor;
+
     /*
-    Flywheel Motor / Redline? / SparkMax 30 
+    //Flywheel Motor / Redline? / SparkMax 30 
     Turret Rotation Motor / Redline? / SparkMax 34 
     Gate servo L 31 
     Gate servo R 32
-    Color Sensor 52
+    //Color Sensor 52
     Beam Break Sensor 53
      */
     
     public ShootSubsystem(){
         FlywheelMotor = new CANSparkMax(30, MotorType.kBrushless);
+        cSensor = new ColorSensorV3(Port.kOnboard);
     }
 
     public void BeginRamp(double DesiredSpeed) { //Begin ramping the motor to the Desired speed as specified in ShootCommand
@@ -60,6 +66,14 @@ public class ShootSubsystem extends SubsystemBase{
             }
         }
     }
+
+    public boolean getBallColor(){
+        if(cSensor.getRed() == cSensor.getBlue()){
+            return true; //TODO: get alliance color as not default
+        }
+        return cSensor.getRed() > cSensor.getBlue();
+    }
+
     /*
     Methods:
         Void:
