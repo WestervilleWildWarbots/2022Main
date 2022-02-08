@@ -34,19 +34,22 @@ public class ShootSubsystem extends SubsystemBase{
     private double QuarterSpeed;
     private double ThreeQuarterSpeed;
 
+    private ColorSensorV3 cSensor;
+
     /*
-    Flywheel Motor / Redline? / SparkMax 30 
+    //Flywheel Motor / Redline? / SparkMax 30 
     Turret Rotation Motor / Redline? / SparkMax 34 
     Gate servo L 31 
     Gate servo R 32
-    Color Sensor 52
+    //Color Sensor 52
     Beam Break Sensor 53
      */
     
     public ShootSubsystem(){
         FlywheelMotor = new CANSparkMax(30, MotorType.kBrushless);
         TurretMotor = new CANSparkMax(34, MotorType.kBrushless);
-        CSensor = new ColorSensorV3(i2cPort);
+
+        cSensor = new ColorSensorV3(Port.kOnboard);
     }
 
     public void BeginRamp(double DesiredSpeed) throws InterruptedException { //Begin ramping the motor to the Desired speed as specified in ShootCommand
@@ -154,12 +157,12 @@ public class ShootSubsystem extends SubsystemBase{
     }
 
     public boolean getBallColor(){
-        SmartDashboard.putNumber("Red Value", CSensor.getRed());
-        if(CSensor.getRed() ==1){
-            return true;
+        if(cSensor.getRed() == cSensor.getBlue()){
+            return true; //TODO: get alliance color as not default
         }
-        return false;
+        return cSensor.getRed() > cSensor.getBlue();
     }
+
     /*
     Methods:
         Void:
