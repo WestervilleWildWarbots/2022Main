@@ -33,11 +33,26 @@ public class ShootCommand extends CommandBase{
         //Fourth, Begin Ramp Down procedure to initial speed of 0
         if (FireAtWill == true) {
             switch(Preset) {
-                case 1:shootSubsystem.BeginRamp(0.25);
+                case 1:try {
+                        shootSubsystem.BeginRamp(0.25);
+                    } catch (InterruptedException e2) {
+                        // TODO Auto-generated catch block
+                        e2.printStackTrace();
+                    }
                 break;
-                case 2:shootSubsystem.BeginRamp(0.55);
+                case 2:try {
+                        shootSubsystem.BeginRamp(0.55);
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
                 break;
-                case 3:shootSubsystem.BeginRamp(0.75);
+                case 3:try {
+                        shootSubsystem.BeginRamp(0.75);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 break;
             }
         }
