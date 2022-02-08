@@ -1,5 +1,12 @@
 package frc.robot.Subsystems;
 
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VisionSubsystem extends SubsystemBase{
@@ -9,10 +16,37 @@ public class VisionSubsystem extends SubsystemBase{
     Light?
      */
 
+    private UsbCamera shootCamera;
+    private UsbCamera intakeCamera;
+
+    private CvSink sink;
+    private CvSource outputStream;
+    private Mat source;
+    private Mat output;
+
     public VisionSubsystem(){
 
+        shootCamera = CameraServer.startAutomaticCapture(0);
+        intakeCamera = CameraServer.startAutomaticCapture(1);
+
+        sink = CameraServer.getVideo(shootCamera);
+        outputStream = CameraServer.putVideo("TEST", 320, 240);
+
+        source = new Mat();
+        output = new Mat();
+
     }
-    
+
+    public void update(){
+        sink.grabFrame(source);
+        try{
+            Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+            outputStream.putFrame(output);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     /*
     Methods:
         Void:
