@@ -22,6 +22,7 @@ public class VisionSubsystem extends SubsystemBase{
     private CvSink sink;
     private CvSource outputStream;
     private Mat source;
+    private Mat gray;
     private Mat output;
 
     public VisionSubsystem(){
@@ -33,6 +34,7 @@ public class VisionSubsystem extends SubsystemBase{
         outputStream = CameraServer.putVideo("TEST", 320, 240);
 
         source = new Mat();
+        gray = new Mat();
         output = new Mat();
 
     }
@@ -40,7 +42,8 @@ public class VisionSubsystem extends SubsystemBase{
     public void update(){
         sink.grabFrame(source);
         try{
-            Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+            Imgproc.cvtColor(source, gray, Imgproc.COLOR_BGR2GRAY);
+            Imgproc.threshold(gray, output, 240, 255, Imgproc.THRESH_BINARY);
             outputStream.putFrame(output);
         }catch(Exception e){
             e.printStackTrace();
