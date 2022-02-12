@@ -12,8 +12,6 @@ import frc.robot.Robot;
 public class ShootCommand extends CommandBase{
 
     private ShootSubsystem shootSubsystem;
-    public int Preset = 1;
-    public boolean FireAtWill = false;
 
     public ShootCommand(ShootSubsystem shootSubsystem){
         this.shootSubsystem = shootSubsystem;
@@ -31,33 +29,8 @@ public class ShootCommand extends CommandBase{
         //Second, Once Preset is checked, get desired maximum speed(This is the Preset)
         //Third, Once desired speed reached, Hold for ~1.5 seconds(Testing, make ~.25 - ~.5 seconds for actual)
         //Fourth, Begin Ramp Down procedure to initial speed of 0
-        if (FireAtWill == true) {
-            switch(Preset) {
-                case 1:try {
-                        shootSubsystem.BeginRamp(0.25);
-                    } catch (InterruptedException e2) {
-                        // TODO Auto-generated catch block
-                        e2.printStackTrace();
-                    }
-                break;
-                case 2:try {
-                        shootSubsystem.BeginRamp(0.55);
-                    } catch (InterruptedException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-                break;
-                case 3:try {
-                        shootSubsystem.BeginRamp(0.75);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                break;
-            }
-        }
-        FireAtWill = false;
-
+        
+        shootSubsystem.ramp(0.7);
 
         //TODO: sense color and spit out ball if not our team color
 
