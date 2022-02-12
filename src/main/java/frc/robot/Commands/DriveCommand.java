@@ -8,6 +8,11 @@ public class DriveCommand extends CommandBase{
     private DriveSubsystem driveSubsystem;
     private Joystick driveStick;
 
+    private final double speedscale = 0.7;
+    private final double deadzoneY = 0.2;
+    private final double deadzoneZ = 0.35;
+    private final double deadzoneX = 0.25;
+
     public DriveCommand(DriveSubsystem driveSubsystem, Joystick driveStick){
         this.driveSubsystem = driveSubsystem;
         this.driveStick = driveStick;
@@ -19,15 +24,17 @@ public class DriveCommand extends CommandBase{
     }
 
     @Override
-    public void execute(){
-      final double speedscale = 0.7;
-    final double deadzoneY = 0.2;
-    final double deadzoneZ = 0.35;     
+    public void execute(){     
 
+    double x = driveStick.getX();
     double y = driveStick.getY();
     double z = driveStick.getZ();
 
     //Deadzone Code
+    if (Math.abs(x) <= deadzoneX) {
+      x = 0;
+    }
+
     if (Math.abs(y) <= deadzoneY) {
       y = 0;
     }
@@ -35,8 +42,9 @@ public class DriveCommand extends CommandBase{
     if (Math.abs(z) <= deadzoneZ) {
       z = 0;
     }
-   
-    z*=.4*Math.abs(z);
+
+
+    z*=Math.abs(z);
 
     double leftPower = speedscale*-(z-y);
     double rightPower = speedscale*(z+y);

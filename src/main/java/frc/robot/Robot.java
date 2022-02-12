@@ -4,8 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.ADIS16448_IMU;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.*;
@@ -38,6 +43,9 @@ public class Robot extends TimedRobot {
   private UnlatchCommand unlatchCommand;
 
   private Joystick controlStick;
+
+  private ADIS16448_IMU gyro;
+  private ADXRS450_Gyro gyroSmall;
 
 
   /**
@@ -72,6 +80,10 @@ public class Robot extends TimedRobot {
     rotateCommand.initialize();
     shootCommand.initialize();
     unlatchCommand.initialize();
+
+    gyro = new ADIS16448_IMU(ADIS16448_IMU.IMUAxis.kZ,SPI.Port.kMXP,ADIS16448_IMU.CalibrationTime._512ms);
+    gyro.calibrate();
+    //gyroSmall = new ADXRS450_Gyro(Port.kOnboardCS0);
   }
 
   /**
@@ -82,7 +94,9 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    System.out.println(gyro.getAngle());
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
