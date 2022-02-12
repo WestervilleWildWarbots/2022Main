@@ -61,7 +61,10 @@ public class DriveCommand extends CommandBase{
     double foreslashPower = drivePower*Math.cos(driveAngle);
     double backslashPower = drivePower*Math.sin(driveAngle);
 
-    driveSubsystem.regularDrive(backslashPower, foreslashPower, backslashPower, foreslashPower);
+    double leftPower = speedscale*0.4*z;
+    double rightPower = speedscale*0.4*-z;
+
+    driveSubsystem.regularDrive(backslashPower/*+leftPower*/, foreslashPower/*+rightPower*/, backslashPower/*+leftPower*/, foreslashPower/*+rightPower*/);
 
   }
 
