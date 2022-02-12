@@ -8,8 +8,10 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -158,7 +160,7 @@ public class ShootSubsystem extends SubsystemBase{
 
     public boolean getBallColor(){
         if(cSensor.getRed() == cSensor.getBlue()){
-            return true; //TODO: get alliance color as not default
+            return DriverStation.getAlliance() == Alliance.Red;
         }
         return cSensor.getRed() > cSensor.getBlue();
     }
