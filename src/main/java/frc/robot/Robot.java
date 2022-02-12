@@ -44,8 +44,7 @@ public class Robot extends TimedRobot {
 
   private Joystick controlStick;
 
-  private ADIS16448_IMU gyro;
-  private ADXRS450_Gyro gyroSmall;
+  private ADXRS450_Gyro gyro;
 
 
   /**
@@ -81,9 +80,7 @@ public class Robot extends TimedRobot {
     shootCommand.initialize();
     unlatchCommand.initialize();
 
-    gyro = new ADIS16448_IMU(ADIS16448_IMU.IMUAxis.kZ,SPI.Port.kMXP,ADIS16448_IMU.CalibrationTime._512ms);
-    gyro.calibrate();
-    //gyroSmall = new ADXRS450_Gyro(Port.kOnboardCS0);
+    gyro = new ADXRS450_Gyro();
   }
 
   /**
@@ -95,7 +92,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    System.out.println(gyro.getAngle());
+    SmartDashboard.putNumber("Gyro", gyro.getAngle());
   }
 
   /**
@@ -143,6 +140,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    driveCommand.execute();
   }
 
   /** This function is called once when the robot is disabled. */

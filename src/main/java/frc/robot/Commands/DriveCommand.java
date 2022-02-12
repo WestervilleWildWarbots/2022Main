@@ -1,5 +1,6 @@
 package frc.robot.Commands;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Subsystems.DriveSubsystem;
 
@@ -46,10 +47,21 @@ public class DriveCommand extends CommandBase{
 
     z*=Math.abs(z);
 
-    double leftPower = speedscale*-(z-y);
-    double rightPower = speedscale*(z+y);
+    //double leftPower = speedscale*-(z-y);
+    //double rightPower = speedscale*(z+y);
 
-    driveSubsystem.tankDrive(leftPower, rightPower);
+    //driveSubsystem.tankDrive(leftPower, rightPower);
+
+    double driveAngle = (-Math.toDegrees(Math.atan2(y,x))-45) % 360;
+    double drivePower = speedscale*Math.sqrt(x*x+y*y)/Math.sqrt(2);
+
+    SmartDashboard.putNumber("drive angle", driveAngle);
+    SmartDashboard.putNumber("drive power", drivePower);
+
+    double foreslashPower = drivePower*Math.cos(driveAngle);
+    double backslashPower = drivePower*Math.sin(driveAngle);
+
+    driveSubsystem.regularDrive(backslashPower, foreslashPower, backslashPower, foreslashPower);
 
   }
 
