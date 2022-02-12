@@ -123,12 +123,13 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-
+    shootCommand.initialize();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    shootCommand.execute();
   }
 
   /** This function is called once when the robot is disabled. */

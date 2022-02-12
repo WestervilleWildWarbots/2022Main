@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShootSubsystem extends SubsystemBase{
     private CANSparkMax flywheelMotor;
@@ -48,6 +49,11 @@ public class ShootSubsystem extends SubsystemBase{
         }
 
         flywheelMotor.set(currentSpeed);
+        SmartDashboard.putNumber("Ramp", currentSpeed);
+    }
+
+    public void rampReset(){
+        currentSpeed = 0;
     }
 
     public String returnAlliance(boolean R){

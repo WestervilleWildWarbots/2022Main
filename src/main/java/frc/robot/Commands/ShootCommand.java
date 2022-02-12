@@ -19,7 +19,7 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void initialize(){
-
+        shootSubsystem.rampReset();
     }
 
     @Override
