@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
   private UnlatchCommand unlatchCommand;
 
   private Joystick controlStick;
-
+  private double minArea = 40;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -72,6 +72,8 @@ public class Robot extends TimedRobot {
     rotateCommand.initialize();
     shootCommand.initialize();
     unlatchCommand.initialize();
+
+    SmartDashboard.putNumber("Min Area", minArea);
   }
 
   /**
