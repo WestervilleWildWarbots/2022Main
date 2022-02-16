@@ -56,15 +56,6 @@ public class ShootSubsystem extends SubsystemBase{
         currentSpeed = 0;
     }
 
-    public String returnAlliance(boolean R){
-        if(R = false){
-            return "Red";
-        }else{
-            return "Blue";
-        }
-        
-    }
-
     public boolean getBallColor(){
         if(cSensor.getRed() == cSensor.getBlue()){
             return DriverStation.getAlliance() == Alliance.Red;
