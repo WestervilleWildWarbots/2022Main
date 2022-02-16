@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShootSubsystem extends SubsystemBase{
+    
     private CANSparkMax flywheelMotor;
     private CANSparkMax turretMotor;
     private Servo leftServo;
@@ -24,13 +25,15 @@ public class ShootSubsystem extends SubsystemBase{
 
     private ColorSensorV3 cSensor;
 
+
+
     /*
     //Flywheel Motor / Redline? / SparkMax 30 
-    Turret Rotation Motor / Redline? / SparkMax 34 
+    //Turret Rotation Motor / Redline? / SparkMax 34 
     Gate servo L 31 
     Gate servo R 32
     //Color Sensor 52
-    Beam Break Sensor 53
+    Beam Break Sensor 53?
      */
     
     public ShootSubsystem(){
@@ -40,6 +43,7 @@ public class ShootSubsystem extends SubsystemBase{
         cSensor = new ColorSensorV3(Port.kOnboard);
     }
 
+    //Shoot Methods
     public void ramp(double speed){
 
         if(currentSpeed < speed){
@@ -56,6 +60,12 @@ public class ShootSubsystem extends SubsystemBase{
         currentSpeed = 0;
     }
 
+    public double getShootSpeed(){
+        return currentSpeed;
+    };
+
+
+    //In Hopper Methods
     public boolean getBallColor(){
         if(cSensor.getRed() == cSensor.getBlue()){
             return DriverStation.getAlliance() == Alliance.Red;
@@ -66,16 +76,15 @@ public class ShootSubsystem extends SubsystemBase{
     /*
     Methods:
         Void:
-            shoot - spin flywheel motor at given speed 
+            /shoot - spin flywheel motor at given speed 
             PIDshoot - spin flywheel motor at given speed with PID calculations
             rotate - rotate "lazy susan" to a given position
             toggleGate - set gate servos to open if closed or closed if open
-            setGate - set gate servos to open/closed (t/f)
-            setAllianceColor - set Alliance color to red/blue (t/f) 
+            setGate - set gate servos to open/closed (t/f) 
         Return:
             getTurretRotation - return lazy susan position
-            getShootSpeed - return current flywheel motor speed
-            getBallColor - return whether held ball is red/blue (t/f)
+            /getShootSpeed - return current flywheel motor speed
+            /getBallColor - return whether held ball is red/blue (t/f)
             getGateState - return whether gate servos are open/closed (t/f)
             getBeamState - return whether beam is broken/unbroken (t/f)
 
