@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   private Drive drive;
+  private double spd = 0;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -79,12 +80,26 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    spd = 0;
+    
+    try{
+      Thread.sleep(3000);
+    }catch(Exception e){
+      e.printStackTrace();
+    }
+  }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    drive.go(0.5);
+    if(spd < 0.5){
+      spd += 0.001;
+    }
+
+    drive.go(spd);
+
+    SmartDashboard.putNumber("spd", spd);
   }
 
   /** This function is called once when the robot is disabled. */
