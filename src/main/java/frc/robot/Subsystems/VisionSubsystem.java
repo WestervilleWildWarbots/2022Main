@@ -65,6 +65,7 @@ public class VisionSubsystem extends SubsystemBase{
 
         MIN_AREA = SmartDashboard.getNumber("Min Area", 40);
         THRESHOLD = SmartDashboard.getNumber("Brightness Threshold", 240);
+        MIN_SOLIDITY_RATIO = SmartDashboard.getNumber("SOLIDITY", 0);
         contours = new ArrayList<MatOfPoint>();
         targets.clear();
 
@@ -92,21 +93,21 @@ public class VisionSubsystem extends SubsystemBase{
                     continue;
                 }
 
-                /*//Filter extraneously thin + wide contours :: ASPECT RATIO
+                //Filter extraneously thin + wide contours :: ASPECT RATIO
                 Rect boundRect = Imgproc.boundingRect(contours.get(i));
-                double ratio = (double)boundRect.width/boundRect.height;
+                /*double ratio = (double)boundRect.width/boundRect.height;
 
                 if(ratio < MIN_RATIO || ratio > MAX_RATIO){
                     continue;
                 }*/
 
-                /*//Filter extraneously skewed contours :: SOLIDITY
+                //Filter extraneously skewed contours :: SOLIDITY
                 double boundingArea = boundRect.width * boundRect.height;
-                double solidRatio = boundingArea/contourArea;
+                double solidRatio = contourArea/boundingArea;
 
                 if(solidRatio < MIN_SOLIDITY_RATIO){
                     continue;
-                }*/
+                }
                 
                 //If the contour passes all tests, draw contour to output and add to targets list
                 targets.add(contours.get(i));

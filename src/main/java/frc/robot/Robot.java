@@ -75,6 +75,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Min Area", minArea);
     SmartDashboard.putNumber("Brightness Threshold", 240);
+    SmartDashboard.putNumber("SOLIDITY", 0);
   }
 
   /**
