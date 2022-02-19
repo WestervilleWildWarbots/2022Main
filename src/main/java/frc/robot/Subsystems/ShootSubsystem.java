@@ -6,6 +6,7 @@ import frc.robot.Commands.ShootCommand;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -38,6 +39,9 @@ public class ShootSubsystem extends SubsystemBase{
     
     public ShootSubsystem(){
         flywheelMotor = new CANSparkMax(30, MotorType.kBrushless);
+        flywheelMotor.setIdleMode(IdleMode.kCoast);
+        flywheelMotor.setOpenLoopRampRate(2);
+        flywheelMotor.setClosedLoopRampRate(2);
         turretMotor = new CANSparkMax(34, MotorType.kBrushless);
 
         cSensor = new ColorSensorV3(Port.kOnboard);
