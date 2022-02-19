@@ -36,6 +36,7 @@ public class VisionSubsystem extends SubsystemBase{
     private Mat output;
     private List<MatOfPoint> targets;
 
+    private static double THRESHOLD = 240;
     private static double MIN_AREA = 40;
     private static double MAX_AREA = Double.MAX_VALUE;
 
@@ -56,13 +57,16 @@ public class VisionSubsystem extends SubsystemBase{
         binary = new Mat();
         hierarchy = new Mat();
         output = new Mat();
+
+        targets = new ArrayList<MatOfPoint>();
     }
 
     public void update(){
 
         MIN_AREA = SmartDashboard.getNumber("Min Area", 40);
+        THRESHOLD = SmartDashboard.getNumber("Brightness Threshold", 240);
         contours = new ArrayList<MatOfPoint>();
-        targets = new ArrayList<MatOfPoint>();
+        targets.clear();
 
         inputStream.grabFrame(source);
         try{
@@ -70,7 +74,7 @@ public class VisionSubsystem extends SubsystemBase{
             Imgproc.cvtColor(source, gray, Imgproc.COLOR_BGR2GRAY);
             
             //Convert grayscale to binary black + white
-            Imgproc.threshold(gray, binary, 240, 255, Imgproc.THRESH_BINARY);
+            Imgproc.threshold(gray, binary, THRESHOLD, 255, Imgproc.THRESH_BINARY);
 
             //Find Contours within binary image
             Imgproc.findContours(binary, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
@@ -105,8 +109,8 @@ public class VisionSubsystem extends SubsystemBase{
                 }*/
                 
                 //If the contour passes all tests, draw contour to output and add to targets list
-                //targets.add(contours.get(i));
-                Imgproc.drawContours(output, contours, i, new Scalar(0, 0, 255));
+                targets.add(contours.get(i));
+                Imgproc.drawContours(output, contours, i, new Scalar(0, 0, 255), 5);
 
             }
 

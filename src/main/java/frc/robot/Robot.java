@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
     unlatchCommand.initialize();
 
     SmartDashboard.putNumber("Min Area", minArea);
+    SmartDashboard.putNumber("Brightness Threshold", 240);
   }
 
   /**
