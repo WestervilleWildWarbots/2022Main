@@ -30,8 +30,8 @@ public class ShootSubsystem extends SubsystemBase{
     /*
     //Flywheel Motor / Redline? / SparkMax 30 
     //Turret Rotation Motor / Redline? / SparkMax 34 
-    Gate servo L 1 
-    Gate servo R 2
+    //Gate servo L 1 
+    //Gate servo R 2
     //Color Sensor 52
     Beam Break Sensor 53?
      */
@@ -94,8 +94,8 @@ public class ShootSubsystem extends SubsystemBase{
             leftServo.setAngle(0);
             rightServo.setAngle(0);
         }else{
-            leftServo.setAngle(45);
-            rightServo.setAngle(45);
+            leftServo.setAngle(90);
+            rightServo.setAngle(90);
         }
     }
 
