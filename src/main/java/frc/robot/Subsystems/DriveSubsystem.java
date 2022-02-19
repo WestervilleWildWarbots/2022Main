@@ -21,6 +21,9 @@ public class DriveSubsystem extends SubsystemBase{
         frontRight = new CANSparkMax(12, MotorType.kBrushless);
         backLeft = new CANSparkMax(21, MotorType.kBrushless);
         backRight = new CANSparkMax(22, MotorType.kBrushless);
+
+        frontRight.setInverted(true);
+        backRight.setInverted(true);
     }
     public void tankDrive(double leftSpeed, double rightSpeed) {
         frontLeft.set(leftSpeed);

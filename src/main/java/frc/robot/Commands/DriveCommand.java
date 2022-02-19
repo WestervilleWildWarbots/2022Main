@@ -58,13 +58,15 @@ public class DriveCommand extends CommandBase{
     SmartDashboard.putNumber("drive angle", driveAngle);
     SmartDashboard.putNumber("drive power", drivePower);
 
-    double foreslashPower = drivePower*Math.cos(driveAngle);
-    double backslashPower = drivePower*Math.sin(driveAngle);
+    double foreslashPower = drivePower*Math.cos(Math.toRadians(driveAngle));
+    double backslashPower = drivePower*Math.sin(Math.toRadians(driveAngle));
 
     double leftPower = speedscale*0.4*z;
     double rightPower = speedscale*0.4*-z;
 
     driveSubsystem.regularDrive(backslashPower/*+leftPower*/, foreslashPower/*+rightPower*/, backslashPower/*+leftPower*/, foreslashPower/*+rightPower*/);
+
+    SmartDashboard.putString("wheels", (backslashPower+leftPower) + "\t" + (foreslashPower+rightPower) + "\t" + (backslashPower+leftPower) + "\t" + (foreslashPower + rightPower));
 
   }
 
