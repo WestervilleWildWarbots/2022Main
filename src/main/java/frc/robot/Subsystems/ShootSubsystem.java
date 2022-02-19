@@ -25,14 +25,13 @@ public class ShootSubsystem extends SubsystemBase{
     private double currentSpeed = 0;
 
     private ColorSensorV3 cSensor;
-
-
+    private boolean gateOpen;
 
     /*
     //Flywheel Motor / Redline? / SparkMax 30 
     //Turret Rotation Motor / Redline? / SparkMax 34 
-    Gate servo L 31 
-    Gate servo R 32
+    Gate servo L 1 
+    Gate servo R 2
     //Color Sensor 52
     Beam Break Sensor 53?
      */
@@ -45,6 +44,11 @@ public class ShootSubsystem extends SubsystemBase{
         turretMotor = new CANSparkMax(34, MotorType.kBrushless);
 
         cSensor = new ColorSensorV3(Port.kOnboard);
+
+        leftServo = new Servo(1);
+        rightServo = new Servo(2);
+
+        gateOpen = false;
     }
 
     //Shoot Methods
@@ -77,19 +81,42 @@ public class ShootSubsystem extends SubsystemBase{
         return cSensor.getRed() > cSensor.getBlue();
     }
 
+    public void toggleGate(){
+        gateOpen = !gateOpen;
+    }
+
+    public void setGate(boolean state){
+        gateOpen = state;
+    }
+
+    public void updateServos(){
+        if(gateOpen){
+            leftServo.setAngle(0);
+            rightServo.setAngle(0);
+        }else{
+            leftServo.setAngle(45);
+            rightServo.setAngle(45);
+        }
+    }
+
+    public boolean getGateState(){
+        return gateOpen;
+    }
+
+
     /*
     Methods:
         Void:
             /shoot - spin flywheel motor at given speed 
             PIDshoot - spin flywheel motor at given speed with PID calculations
             rotate - rotate "lazy susan" to a given position
-            toggleGate - set gate servos to open if closed or closed if open
-            setGate - set gate servos to open/closed (t/f) 
+            /toggleGate - set gate servos to open if closed or closed if open
+            /setGate - set gate servos to open/closed (t/f) 
         Return:
             getTurretRotation - return lazy susan position
             /getShootSpeed - return current flywheel motor speed
             /getBallColor - return whether held ball is red/blue (t/f)
-            getGateState - return whether gate servos are open/closed (t/f)
+            /getGateState - return whether gate servos are open/closed (t/f)
             getBeamState - return whether beam is broken/unbroken (t/f)
 
     */
