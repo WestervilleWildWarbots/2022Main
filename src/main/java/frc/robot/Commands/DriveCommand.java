@@ -12,7 +12,7 @@ public class DriveCommand extends CommandBase{
     private final double speedscale = 0.7;
     private final double deadzoneY = 0.2;
     private final double deadzoneZ = 0.35;
-    private final double deadzoneX = 0.25;
+    private final double deadzoneX = 0.3;
 
     public DriveCommand(DriveSubsystem driveSubsystem, Joystick driveStick){
         this.driveSubsystem = driveSubsystem;
@@ -64,9 +64,10 @@ public class DriveCommand extends CommandBase{
     double leftPower = speedscale*0.4*z;
     double rightPower = speedscale*0.4*-z;
 
-    driveSubsystem.regularDrive(backslashPower/*+leftPower*/, foreslashPower/*+rightPower*/, backslashPower/*+leftPower*/, foreslashPower/*+rightPower*/);
+    driveSubsystem.regularDrive(backslashPower+leftPower, foreslashPower+rightPower, foreslashPower+leftPower, backslashPower+rightPower);
 
-    SmartDashboard.putString("wheels", (backslashPower+leftPower) + "\t" + (foreslashPower+rightPower) + "\t" + (backslashPower+leftPower) + "\t" + (foreslashPower + rightPower));
+    SmartDashboard.putString("front wheels", (backslashPower+leftPower) + "\t" + (foreslashPower+rightPower));
+    SmartDashboard.putString("back wheels", (foreslashPower+leftPower) + "\t" + (backslashPower + rightPower));
 
   }
 
