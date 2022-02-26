@@ -73,10 +73,11 @@ public class Robot extends TimedRobot {
     shootCommand.initialize();
     unlatchCommand.initialize();
 
-    SmartDashboard.putNumber("Min Area", minArea);
-    SmartDashboard.putNumber("Max Area", Double.MAX_VALUE);
+    SmartDashboard.putNumber("Min Area", 10);
+    SmartDashboard.putNumber("Max Area", 200);
     SmartDashboard.putNumber("Brightness Threshold", 240);
-    SmartDashboard.putNumber("SOLIDITY", 0);
+    SmartDashboard.putNumber("SOLIDITY", 1);
+    SmartDashboard.putNumber("ASPECT", 2.75);
   }
 
   /**
