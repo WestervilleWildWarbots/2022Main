@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.EncoderType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
@@ -125,47 +126,9 @@ public class ShootSubsystem extends SubsystemBase{
         return gateOpen;
     }
     
-    public void rotate(double desiredRotation){ //rotates the Turret to desired position, currently has a -30 to 30 degree restraint as unsure what actual specs will be
-        if(desiredRotation < 30 || desiredRotation < -30){// If we don't have encoders I will rewrite this whole area... Do I even need encoders for this? I dunno.
-            Encoder halp= (Encoder) turretMotor.getEncoder(Type.kHallSensor, 5);// No clue if this is correct (spoilers, its not)
-            halp.reset();
-            if(desiredRotation < 0 ){
-                halp.setDistancePerPulse(-1);// IS THIS RIGHT?
-                while(halp.getDistance() > desiredRotation){
-                    turretMotor.set(-1); // Would this even make it rotate backwards or would it just destroy the motor
-                    currentRotation = halp.getDistance();
-                }
-            }else{
-                halp.setDistancePerPulse(1);// IS THIS RIGHT?
-                while(halp.getDistance() > desiredRotation){
-                    turretMotor.set(1); //This should work? maybe? maybe not? find out next time.
-                    currentRotation = halp.getDistance();
-                }
-            }
-            
-        }
-    }
 
     public double getTurretRotation(){
         return currentRotation;
-    }
-
-
-    public void getDistance(){//RANDOM BULLSHIT GO https://www.pinterest.ph/pin/516436282275604205/ Yes I did some research, not entirely random BS.
-        targets.clear();
-        for(int x =0; x < visionSubsystem.targets.size(); x++ ){ // 320px x 240px for current camera. min area = 40px
-            targets.add(visionSubsystem.targets.get(x));//I will now do some very shitty, probably inaccurate math. But hopefully it will work.
-            double ContourArea = Imgproc.contourArea(targets.get(x)); //Gets the total area of contour... I'm like 99% sure I need this
-            double countourWidth = targets.get(x).width();
-            double contourHeight = targets.get(x).height();
-            //Used a 20 for the Focal Length. placeholder.
-            double distance = (20*countourWidth)/ContourArea; //We need a Focal Length to get a perfectly accurate formula. F = (P*D)/W, currently using this formula for Distance, D =(W*F)/P. F = Focal Length, W = Width of Object, P = Pixels Covered,  D = Actual Distance
-            System.out.println(distance);
-
-        }
-        
-
-       
     }
 
 }
