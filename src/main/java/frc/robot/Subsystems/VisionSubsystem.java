@@ -34,7 +34,7 @@ public class VisionSubsystem extends SubsystemBase{
     private List<MatOfPoint> contours;
     private Mat hierarchy;
     private Mat output;
-    private List<MatOfPoint> targets;
+    private MatOfPoint target;
 
     private static double THRESHOLD = 240;
     private static double MIN_AREA = 40;
@@ -58,7 +58,7 @@ public class VisionSubsystem extends SubsystemBase{
         hierarchy = new Mat();
         output = new Mat();
 
-        targets = new ArrayList<MatOfPoint>();
+        target = new MatOfPoint();
     }
 
     public void update(){
@@ -68,7 +68,7 @@ public class VisionSubsystem extends SubsystemBase{
         THRESHOLD = SmartDashboard.getNumber("Brightness Threshold", 240);
         MIN_SOLIDITY_RATIO = SmartDashboard.getNumber("SOLIDITY", 0);
         contours = new ArrayList<MatOfPoint>();
-        targets.clear();
+        target = new MatOfPoint();
 
         inputStream.grabFrame(source);
         try{
@@ -85,39 +85,45 @@ public class VisionSubsystem extends SubsystemBase{
             Imgproc.cvtColor(binary, output, Imgproc.COLOR_GRAY2BGR);
 
             //Run contour tests
+
+            
+            int minIndex = 0;
+
             for (int i = 0; i < contours.size(); i++) {
                 
                 // Filter extraneously small + large contours :: AREA
                 double contourArea = Imgproc.contourArea(contours.get(i));
-                
+                Rect boundRect = Imgproc.boundingRect(contours.get(i));
+                double ratio = (double)boundRect.width/boundRect.height;
+                double boundingArea = boundRect.width * boundRect.height;
+                double solidRatio = contourArea/boundingArea;
+
+
                 if(contourArea < MIN_AREA || contourArea > MAX_AREA){
                     continue;
                 }
 
-                //Filter extraneously thin + wide contours :: ASPECT RATIO
-                Rect boundRect = Imgproc.boundingRect(contours.get(i));
-                /*double ratio = (double)boundRect.width/boundRect.height;
+                /*//Filter extraneously thin + wide contours :: ASPECT RATIO
 
                 if(ratio < MIN_RATIO || ratio > MAX_RATIO){
                     continue;
-                }*/
+                }
 
                 //Filter extraneously skewed contours :: SOLIDITY
-                double boundingArea = boundRect.width * boundRect.height;
-                double solidRatio = contourArea/boundingArea;
-
                 if(solidRatio < MIN_SOLIDITY_RATIO){
                     continue;
-                }
+                }*/
                 
                 //If the contour passes all tests, draw contour to output and add to targets list
-                targets.add(contours.get(i));
+                //targets.add(contours.get(i));
+                
                 Imgproc.drawContours(output, contours, i, new Scalar(0, 0, 255), 5);
 
             }
 
             //send output to dashboard
             outputStream.putFrame(output);
+        
         }catch(Exception e){
             e.printStackTrace();
         }
