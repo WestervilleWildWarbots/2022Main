@@ -64,6 +64,7 @@ public class VisionSubsystem extends SubsystemBase{
     public void update(){
 
         MIN_AREA = SmartDashboard.getNumber("Min Area", 40);
+        MAX_AREA = SmartDashboard.getNumber("Max Area", Double.MAX_VALUE);
         THRESHOLD = SmartDashboard.getNumber("Brightness Threshold", 240);
         MIN_SOLIDITY_RATIO = SmartDashboard.getNumber("SOLIDITY", 0);
         contours = new ArrayList<MatOfPoint>();
