@@ -24,7 +24,8 @@ Sensors - 0X and 5X
 
 Shoot Camera 0
 Intake/Front Camera 1
-Light?
+Light 54?
 Gyro 50
 Accelerometer 51
 Color Sensor 52
+Beam Break Sensor 53?
