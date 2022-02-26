@@ -4,8 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.ADIS16448_IMU;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.*;
@@ -72,6 +77,7 @@ public class Robot extends TimedRobot {
     rotateCommand.initialize();
     shootCommand.initialize();
     unlatchCommand.initialize();
+
   }
 
   /**
@@ -82,7 +88,9 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic(){
+    SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyro());
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -129,6 +137,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    driveCommand.execute();
   }
 
   /** This function is called once when the robot is disabled. */
