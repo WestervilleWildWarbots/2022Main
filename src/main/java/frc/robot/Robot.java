@@ -44,8 +44,6 @@ public class Robot extends TimedRobot {
 
   private Joystick controlStick;
 
-  private ADXRS450_Gyro gyro;
-
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -80,7 +78,6 @@ public class Robot extends TimedRobot {
     shootCommand.initialize();
     unlatchCommand.initialize();
 
-    gyro = new ADXRS450_Gyro();
   }
 
   /**
@@ -91,8 +88,8 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {
-    SmartDashboard.putNumber("Gyro", gyro.getAngle());
+  public void robotPeriodic(){
+    SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyro());
   }
 
   /**
