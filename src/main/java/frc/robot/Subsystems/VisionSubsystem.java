@@ -147,6 +147,22 @@ public class VisionSubsystem extends SubsystemBase{
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        BufferedImage img = null;
+        try {
+            img = Mat2BufferedImage(source);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        for(int y = 0; y < img.getHeight(); y++){
+            for(int x = 0; x < img.getWidth(); x++){
+
+                int c = img.getRGB(x, y);
+
+                img.setRGB(x, y,);
+            }
+        }
     }
 
     static BufferedImage Mat2BufferedImage(Mat matrix)throws Exception {        
