@@ -2,8 +2,11 @@ package frc.robot.Subsystems;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Color;
 
 import javax.imageio.ImageIO;
 
@@ -54,12 +57,12 @@ public class VisionSubsystem extends SubsystemBase{
     public VisionSubsystem(){
 
         shootCamera = CameraServer.startAutomaticCapture(0);
-        intakeCamera = CameraServer.startAutomaticCapture(1);
+        //intakeCamera = CameraServer.startAutomaticCapture(1);
 
         shootCamera.setResolution(160,120);
-        shootCamera.setFPS(24);
-        intakeCamera.setResolution(320,240);
-        intakeCamera.setFPS(24);
+        //shootCamera.setFPS(24);
+        //intakeCamera.setResolution(320,240);
+        //intakeCamera.setFPS(24);
 
         shootCamera.setExposureAuto();
 
@@ -158,11 +161,23 @@ public class VisionSubsystem extends SubsystemBase{
         for(int y = 0; y < img.getHeight(); y++){
             for(int x = 0; x < img.getWidth(); x++){
 
-                int c = img.getRGB(x, y);
+                int cRaw = img.getRGB(x, y);
 
-                img.setRGB(x, y,);
+                Color c = new Color(cRaw); 
+                
+                c = new Color(c.getGreen(),c.getGreen(),c.getGreen());
+
+                img.setRGB(x, y, c.hashCode());
             }
         }
+        
+        try {
+            ImageIO.write(img, "png", new File("C:\\green.png"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
     static BufferedImage Mat2BufferedImage(Mat matrix)throws Exception {        
