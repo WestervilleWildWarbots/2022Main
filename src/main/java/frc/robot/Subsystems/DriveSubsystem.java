@@ -1,6 +1,8 @@
 package frc.robot.Subsystems;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -10,6 +12,9 @@ public class DriveSubsystem extends SubsystemBase{
     private CANSparkMax frontRight;
     private CANSparkMax backLeft;
     private CANSparkMax backRight;
+
+    private double pBase, iBase, dBase, p11, i11, d11, p12, i12, d12, p21, i21, d21, p22, i22, d22; 
+    private PIDController controller11, controller12, controller21, controller22;
 
     private ADXRS450_Gyro gyro;
     /*
@@ -30,6 +35,32 @@ public class DriveSubsystem extends SubsystemBase{
 
         frontRight.setInverted(true);
         backRight.setInverted(true);
+
+        pBase = SmartDashboard.getNumber("pBase", 0);
+        iBase = SmartDashboard.getNumber("iBase", 0);
+        dBase = SmartDashboard.getNumber("dBase", 0);
+
+        p11 = SmartDashboard.getNumber("p11", 0);
+        i11 = SmartDashboard.getNumber("i11", 0);
+        d11 = SmartDashboard.getNumber("d11", 0);
+
+        p12 = SmartDashboard.getNumber("p12", 0);
+        i12 = SmartDashboard.getNumber("i12", 0);
+        d12 = SmartDashboard.getNumber("d12", 0);
+
+        p21 = SmartDashboard.getNumber("p21", 0);
+        i21 = SmartDashboard.getNumber("i21", 0);
+        d21 = SmartDashboard.getNumber("d21", 0);
+
+        p22 = SmartDashboard.getNumber("p22", 0);
+        i22 = SmartDashboard.getNumber("i22", 0);
+        d22 = SmartDashboard.getNumber("d22", 0);
+
+        controller11 = new PIDController(pBase + p11, iBase + i11, dBase + d11);
+        controller12 = new PIDController(pBase + p12, iBase + i12, dBase + d12);
+        controller21 = new PIDController(pBase + p21, iBase + i21, dBase + d21);
+        controller22 = new PIDController(pBase + p22, iBase + i22, dBase + d22);
+
     }
     
     public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -44,6 +75,13 @@ public class DriveSubsystem extends SubsystemBase{
         frontRight.set(frSpeed);
         backLeft.set(blSpeed);
         backRight.set(brSpeed);
+    }
+
+    public void PIDDrive(double flSpeed, double frSpeed, double blSpeed, double brSpeed){
+        frontLeft.set(controller11.calculate(flSpeed));
+        frontRight.set(controller12.calculate(frSpeed));
+        backLeft.set(controller21.calculate(blSpeed));
+        backRight.set(controller22.calculate(brSpeed));
     }
     
     public void resetGyro(){
