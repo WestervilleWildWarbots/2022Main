@@ -78,6 +78,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Brightness Threshold", 240);
     SmartDashboard.putNumber("SOLIDITY", 1);
     SmartDashboard.putNumber("ASPECT", 2.75);
+    
+    SmartDashboard.putNumber("BLUE WEIGHT", 1);
+    SmartDashboard.putNumber("GREEN WEIGHT", 1);
+    SmartDashboard.putNumber("RED WEIGHT", 1);
   }
 
   /**
