@@ -55,26 +55,6 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    SmartDashboard.putNumber("pBase", 0);
-    SmartDashboard.putNumber("iBase", 0);
-    SmartDashboard.putNumber("dBase", 0);
-
-    SmartDashboard.putNumber("p11", 0);
-    SmartDashboard.putNumber("i11", 0);
-    SmartDashboard.putNumber("d11", 0);
-
-    SmartDashboard.putNumber("p12", 0);
-    SmartDashboard.putNumber("i12", 0);
-    SmartDashboard.putNumber("d12", 0);
-    
-    SmartDashboard.putNumber("p21", 0);
-    SmartDashboard.putNumber("i21", 0);
-    SmartDashboard.putNumber("d21", 0);
-
-    SmartDashboard.putNumber("p22", 0);
-    SmartDashboard.putNumber("i22", 0);
-    SmartDashboard.putNumber("d22", 0);
-
     controlStick = new Joystick(0);
 
     driveSubsystem = new DriveSubsystem();

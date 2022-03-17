@@ -35,7 +35,17 @@ public class DriveSubsystem extends SubsystemBase{
 
         frontRight.setInverted(true);
         backRight.setInverted(true);
+        
+        updatePID();
 
+        controller11 = new PIDController(pBase + p11, iBase + i11, dBase + d11);
+        controller12 = new PIDController(pBase + p12, iBase + i12, dBase + d12);
+        controller21 = new PIDController(pBase + p21, iBase + i21, dBase + d21);
+        controller22 = new PIDController(pBase + p22, iBase + i22, dBase + d22);
+
+    }
+    
+    public void updatePID(){
         pBase = SmartDashboard.getNumber("pBase", 0);
         iBase = SmartDashboard.getNumber("iBase", 0);
         dBase = SmartDashboard.getNumber("dBase", 0);
@@ -55,14 +65,8 @@ public class DriveSubsystem extends SubsystemBase{
         p22 = SmartDashboard.getNumber("p22", 0);
         i22 = SmartDashboard.getNumber("i22", 0);
         d22 = SmartDashboard.getNumber("d22", 0);
-
-        controller11 = new PIDController(pBase + p11, iBase + i11, dBase + d11);
-        controller12 = new PIDController(pBase + p12, iBase + i12, dBase + d12);
-        controller21 = new PIDController(pBase + p21, iBase + i21, dBase + d21);
-        controller22 = new PIDController(pBase + p22, iBase + i22, dBase + d22);
-
     }
-    
+
     public void tankDrive(double leftSpeed, double rightSpeed) {
         frontLeft.set(leftSpeed);
         frontRight.set(rightSpeed);

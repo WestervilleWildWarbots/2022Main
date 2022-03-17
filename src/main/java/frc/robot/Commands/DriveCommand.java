@@ -64,6 +64,8 @@ public class DriveCommand extends CommandBase{
     double leftPower = speedscale*0.4*z;
     double rightPower = speedscale*0.4*-z;
 
+    driveSubsystem.updatePID();
+
     driveSubsystem.regularDrive(backslashPower+leftPower, foreslashPower+rightPower, foreslashPower+leftPower, backslashPower+rightPower);
 
     SmartDashboard.putString("front wheels", (backslashPower+leftPower) + "\t" + (foreslashPower+rightPower));
