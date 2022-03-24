@@ -9,10 +9,11 @@ public class DriveCommand extends CommandBase{
     private DriveSubsystem driveSubsystem;
     private Joystick driveStick;
 
-    private final double speedscale = 0.7;
-    private final double deadzoneY = 0.2;
-    private final double deadzoneZ = 0.35;
-    private final double deadzoneX = 0.3;
+    private static final double speedscale = 0.7;
+    private static final double deadzoneY = 0.3;
+    private static final double deadzoneZ = 0.2;
+    private static final double deadzoneX = 0.3;
+    private static final double SpecialDeadzoneY = 0.15;
 
     public DriveCommand(DriveSubsystem driveSubsystem, Joystick driveStick){
         this.driveSubsystem = driveSubsystem;
@@ -28,15 +29,20 @@ public class DriveCommand extends CommandBase{
     public void execute(){     
 
     double x = driveStick.getX();
-    double y = driveStick.getY();
-    double z = driveStick.getZ();
+    double y = -driveStick.getY();
+    double z = -driveStick.getZ();
 
     //Deadzone Code
     if (Math.abs(x) <= deadzoneX) {
       x = 0;
+
+      if (Math.abs(y) <= SpecialDeadzoneY) {
+        y = 0;
+
+      }
     }
 
-    if (Math.abs(y) <= deadzoneY) {
+    else if (Math.abs(y) <= deadzoneY) {
       y = 0;
     }
 
@@ -55,8 +61,8 @@ public class DriveCommand extends CommandBase{
     double driveAngle = (-Math.toDegrees(Math.atan2(y,x))-45) % 360;
     double drivePower = speedscale*Math.sqrt(x*x+y*y)/Math.sqrt(2);
 
-    SmartDashboard.putNumber("drive angle", driveAngle);
-    SmartDashboard.putNumber("drive power", drivePower);
+    // SmartDashboard.putNumber("drive angle", driveAngle);
+    // SmartDashboard.putNumber("drive power", drivePower);
 
     double foreslashPower = drivePower*Math.cos(Math.toRadians(driveAngle));
     double backslashPower = drivePower*Math.sin(Math.toRadians(driveAngle));
@@ -66,10 +72,10 @@ public class DriveCommand extends CommandBase{
 
     driveSubsystem.updatePID();
 
-    driveSubsystem.regularDrive(backslashPower+leftPower, foreslashPower+rightPower, foreslashPower+leftPower, backslashPower+rightPower);
+    driveSubsystem.PIDDrive(backslashPower+leftPower, foreslashPower+rightPower, foreslashPower+leftPower, backslashPower+rightPower);
 
-    SmartDashboard.putString("front wheels", (backslashPower+leftPower) + "\t" + (foreslashPower+rightPower));
-    SmartDashboard.putString("back wheels", (foreslashPower+leftPower) + "\t" + (backslashPower + rightPower));
+    // SmartDashboard.putString("front wheels", (backslashPower+leftPower) + "\t" + (foreslashPower+rightPower));
+    // SmartDashboard.putString("back wheels", (foreslashPower+leftPower) + "\t" + (backslashPower + rightPower));
 
   }
 

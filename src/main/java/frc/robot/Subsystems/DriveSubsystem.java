@@ -65,6 +65,11 @@ public class DriveSubsystem extends SubsystemBase{
         p22 = SmartDashboard.getNumber("p22", 0);
         i22 = SmartDashboard.getNumber("i22", 0);
         d22 = SmartDashboard.getNumber("d22", 0);
+
+        controller11 = new PIDController(pBase + p11, iBase + i11, dBase + d11);
+        controller12 = new PIDController(pBase + p12, iBase + i12, dBase + d12);
+        controller21 = new PIDController(pBase + p21, iBase + i21, dBase + d21);
+        controller22 = new PIDController(pBase + p22, iBase + i22, dBase + d22);
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -72,7 +77,7 @@ public class DriveSubsystem extends SubsystemBase{
         frontRight.set(rightSpeed);
         backLeft.set(leftSpeed);
         backRight.set(rightSpeed);
-      }
+    }
     
     public void regularDrive(double flSpeed, double frSpeed, double blSpeed, double brSpeed){
         frontLeft.set(flSpeed);
